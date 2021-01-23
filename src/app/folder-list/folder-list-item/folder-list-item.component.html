@@ -1,0 +1,58 @@
+<mat-accordion multi="true">
+  <mat-expansion-panel [expanded]="true" #MatExpansionPanel>
+    <div class="dash" *ngIf="!MatExpansionPanel.closed.closed"></div>
+    <mat-expansion-panel-header>
+      <div class="header__container">
+        <div style="display: flex; align-items: center">
+          <img
+            src="../../../assets/images/icons/048-folder.svg"
+            alt="folder"
+            style="margin-right: 10px"
+          />
+          {{ folder.name }}
+          <mat-checkbox
+            color="primary"
+            style="margin-left: 10px"
+          ></mat-checkbox>
+        </div>
+        <div
+          class="folder__buttons"
+          style="position: relative; z-index: 99999999"
+        >
+          <button
+            color="primary"
+            mat-stroked-button
+            class="folder__button"
+            (click)="notClosePanel()"
+          >
+            Add File
+          </button>
+          <button color="accent" mat-stroked-button class="folder__button">
+            Add Folder
+          </button>
+          <button color="warn" mat-stroked-button class="folder__button">
+            Edit
+          </button>
+        </div>
+      </div>
+    </mat-expansion-panel-header>
+    <app-folder-list-item
+      *ngFor="let includedFolder of folder.includedFolders"
+      [folder]="includedFolder"
+    ></app-folder-list-item>
+    <mat-action-row>
+      <ng-container *ngIf="!MatExpansionPanel.closed.closed">
+        <mat-card *ngFor="let file of folder.includedFiles" class="file">
+          <div class="dashes"></div>
+          <img [src]="file.imageLink" [alt]="file.name" class="file__image" />
+          <mat-checkbox color="primary"></mat-checkbox>
+          <div class="file__content">
+            <mat-card-title>{{ file.name }}</mat-card-title>
+            <mat-card-content>{{ file.description }}</mat-card-content>
+          </div>
+          <button color="warn" mat-button class="file__button">Edit</button>
+        </mat-card>
+      </ng-container>
+    </mat-action-row>
+  </mat-expansion-panel>
+</mat-accordion>

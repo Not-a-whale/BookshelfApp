@@ -1,0 +1,115 @@
+app-folder-list-item {
+  margin-left: 10px;
+}
+
+.folder {
+  margin-left: 50px;
+
+  &__buttons {
+    display: flex;
+  }
+
+  &__button {
+    height: 30px;
+    margin-left: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+mat-expansion-panel {
+  margin-left: 10px;
+  margin-bottom: 10px;
+  border-left: 1px dashed black;
+  border-bottom: 1px dashed black;
+  position: relative;
+  overflow: visible;
+
+  mat-expansion-panel-header {
+    align-items: center;
+    display: flex;
+
+    .mat-content {
+      display: flex;
+      align-items: center;
+    }
+  }
+}
+
+.header__container {
+  width: 90%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dash {
+  width: 32px;
+  border: 1px dashed black;
+  position: absolute;
+  top: 0;
+  left: -34px;
+}
+
+.file {
+  display: flex;
+  align-items: center;
+  position: relative;
+  margin-bottom: 10px;
+  margin-left: 16px;
+  transition: 0.3s all;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &:active {
+    transform: scale(0.99);
+
+    .dashes {
+      width: 20px;
+      left: -20px;
+    }
+  }
+
+  mat-checkbox {
+    margin-right: 9px;
+  }
+
+  .dashes {
+    position: absolute;
+    width: 16px;
+    left: -16px;
+    border: 1px dashed black;
+    transition: 0.3s all;
+  }
+
+  mat-card-content {
+    margin: 0;
+  }
+
+  &__image {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+  }
+
+  &__content {
+    flex: 12;
+  }
+
+  &__button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 10px;
+    flex: 1;
+  }
+}
+
+mat-action-row {
+  justify-content: flex-start;
+  padding: 16px 8px 16px 0px;
+  flex-direction: column;
+}

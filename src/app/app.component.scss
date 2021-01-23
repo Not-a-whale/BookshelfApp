@@ -1,0 +1,14 @@
+.container {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+app-folder-list {
+  width: 45%;
+}
+
+app-folder-list-edit {
+  width: 45%;
+}

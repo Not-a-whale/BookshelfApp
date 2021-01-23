@@ -123,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "BookshelfApp"
+    }
+  },
+  "defaultProject": "BookshelfApp",
+  "cli": {
+    "analytics": false
+  }
 }
