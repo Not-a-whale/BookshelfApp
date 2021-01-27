@@ -1,5 +1,26 @@
 .container {
-  margin: 5% auto;
+  margin: 10% auto;
   height: 80vh;
-  background-color: blue;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  mat-card {
+    width: 70%;
+    margin-right: 5%;
+  }
+
+  .buttons {
+    display: flex;
+    justify-content: space-between;
+
+    button {
+      width: 40%;
+    }
+  }
 }

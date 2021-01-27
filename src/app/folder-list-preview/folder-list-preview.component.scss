@@ -1,0 +1,18 @@
+:root {
+  display: block;
+  width: 45%;
+  background-color: red;
+}
+.container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.example-card {
+  margin-top: 5%;
+}
+
+.card__img {
+  width: 500px;
+  height: 500px;
+}

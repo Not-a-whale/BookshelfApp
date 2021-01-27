@@ -16,22 +16,16 @@
     </button>
   </div>
   <div class="container__books">
-    <app-folder-list-item
+    <!--     <app-folder-list-item
       class="folder"
       *ngFor="let folderInput of folders"
       [folder]="folderInput"
-    ></app-folder-list-item>
+    ></app-folder-list-item> -->
   </div>
   <div class="container__files">
-    <mat-card *ngFor="let file of files" class="file">
-      <div class="dashes"></div>
-      <img [src]="file.imageLink" [alt]="file.name" class="file__image" />
-      <mat-checkbox color="primary"></mat-checkbox>
-      <div class="file__content">
-        <mat-card-title>{{ file.name }}</mat-card-title>
-        <mat-card-content>{{ file.description }}</mat-card-content>
-      </div>
-      <button color="warn" mat-button class="file__button">Edit</button>
-    </mat-card>
+    <app-file-list-item
+      *ngFor="let file of files"
+      [file]="file"
+    ></app-file-list-item>
   </div>
 </div>

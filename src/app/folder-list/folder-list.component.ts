@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ItemFolder } from '../models/ItemFolder';
-import { ItemFile } from '../models/ItemFile';
+//import { ItemFolder } from '../models/ItemFolder';
+import { ItemFile } from '../models/Item';
 import { AppBookshelfService } from '../bookshelf-service';
 
 @Component({
@@ -9,22 +9,28 @@ import { AppBookshelfService } from '../bookshelf-service';
   styleUrls: ['./folder-list.component.scss'],
 })
 export class FolderListComponent implements OnInit {
-  folders: ItemFolder[];
-  files: ItemFile[];
+  //folders: ItemFolder[];
+  files = [];
 
   constructor(private bookshelfService: AppBookshelfService) {}
 
   ngOnInit(): void {
     this.getFiles();
-    this.getFolders();
+    // this.getFolders();
   }
 
   getFiles() {
-    this.files = this.bookshelfService.getFiles();
+    this.bookshelfService.getFiles().subscribe((file: any) => {
+      file.items[0].forEach((item) => {
+        this.files.push(item);
+      });
+      console.log(file.items);
+      console.log(this.files);
+    });
     console.log(this.files);
   }
 
-  getFolders() {
+  /*   getFolders() {
     this.folders = this.bookshelfService.getFolders();
-  }
+  } */
 }

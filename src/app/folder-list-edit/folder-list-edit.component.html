@@ -1,3 +1,53 @@
 <div class="container">
-  <p>chlen</p>
+  <mat-card>
+    <form [formGroup]="form" (submit)="onSaveFile()">
+      <mat-form-field>
+        <input
+          matInput
+          type="text"
+          formControlName="name"
+          placeholder="Name of the file"
+        />
+        <mat-error *ngIf="form.get('name').invalid"
+          >Please enter a name of the file</mat-error
+        >
+      </mat-form-field>
+      <mat-form-field>
+        <input
+          matInput
+          type="text"
+          formControlName="imageLink"
+          placeholder="Link to the image "
+        />
+        <mat-error *ngIf="form.get('imageLink').invalid"
+          >Please insert an image link</mat-error
+        >
+      </mat-form-field>
+      <mat-form-field>
+        <textarea
+          matInput
+          rows="4"
+          formControlName="description"
+          placeholder="Post Content"
+        ></textarea>
+        <mat-error *ngIf="form.get('description').invalid"
+          >Please enter a post content</mat-error
+        >
+      </mat-form-field>
+      <br />
+      <div class="buttons">
+        <button mat-raised-button color="primary" type="submit">
+          Save File
+        </button>
+        <button
+          mat-raised-button
+          color="warn"
+          type="submit"
+          [routerLink]="['']"
+        >
+          Return
+        </button>
+      </div>
+    </form>
+  </mat-card>
 </div>

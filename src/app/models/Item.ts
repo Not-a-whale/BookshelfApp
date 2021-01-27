@@ -3,4 +3,6 @@ export type ItemFile = {
   name: string;
   description: string;
   imageLink: string;
+  isFolder: boolean | number;
+  isDeleted: boolean | number;
 };

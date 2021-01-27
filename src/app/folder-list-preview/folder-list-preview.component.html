@@ -1,0 +1,26 @@
+<div class="container">
+  <p *ngIf="!item" style="margin-top: 10%; font-weight: bold; font-size: 2rem">
+    Click on a file to see the content!
+  </p>
+  <mat-card class="example-card" *ngIf="item">
+    <mat-card-header>
+      <div mat-card-avatar class="example-header-image"></div>
+      <mat-card-title>{{ item.name }}</mat-card-title>
+    </mat-card-header>
+    <img
+      mat-card-image
+      [src]="item.imageLink"
+      [alt]="item.name"
+      class="card__img"
+    />
+    <mat-card-content>
+      <p>
+        {{ item.description }}
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button [routerLink]="['/edit', item.id]">Edit</button>
+      <button mat-button [routerLink]="['']">Back</button>
+    </mat-card-actions>
+  </mat-card>
+</div>
