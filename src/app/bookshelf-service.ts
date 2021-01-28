@@ -9,6 +9,7 @@ import { Subject, Observable, BehaviorSubject } from 'rxjs';
 @Injectable({ providedIn: 'root' })
 export class AppBookshelfService {
   filesAndFolders = [];
+  filteredArrOfFolders = [];
   filesSubj = new Subject();
   curentParent = 10;
   /*   private bookshelf: any = [
@@ -109,6 +110,9 @@ export class AppBookshelfService {
        data => {
          data.items.forEach(item => {
            this.filesAndFolders.push(item);
+           if(item.parentId !== 0 && item.isFolder === 1) {
+            this.filteredArrOfFolders.push(item);
+           }
          });
          this.filesSubj.next(this.filesAndFolders.slice());
        }
@@ -133,6 +137,12 @@ export class AppBookshelfService {
     return this.http.post<ItemFile>("http://localhost:3000/api/items/", item).subscribe(response => {
       console.log("response")
     })
+  }
+
+  getRelevantItems(id: number): any {
+    let filteredArray = this.filteredArrOfFolders.filter(item => item.parentId === id);
+    this.filteredArrOfFolders = this.filteredArrOfFolders.filter(item => item.parentId !== id);
+    return filteredArray;
   }
 
 

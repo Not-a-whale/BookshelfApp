@@ -50,16 +50,15 @@
       <p>Hit "enter" key, when done</p>
     </div>
     <ng-container *ngFor="let folderItem of relevantFolders">
-    <app-folder-list-item
-      *ngIf="folder.id === folderItem.parentId && folder.isDeleted === 0"
-      [folder]="folder"
-    ></app-folder-list-item>
+     <app-folder-list-item
+      [folder]="folderItem"
+    ></app-folder-list-item>  
     </ng-container>
     <mat-action-row>
       <ng-container *ngIf="!MatExpansionPanel.closed.closed">
         <ng-container *ngFor="let file of files">
           <app-file-list-item
-          *ngIf="file.parentId === folder.id && file.isDeleted === 0"
+          *ngIf="file.parentId === folder.id && file.parentId !== 0 && file.isDeleted === 0"
           [file]="file"
         ></app-file-list-item>
         </ng-container>

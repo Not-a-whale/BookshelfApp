@@ -17,7 +17,7 @@ export class FolderListItemComponent implements OnInit {
   relevantFolders = [];
   @ViewChild('MatExpansionPanel', { static: true })
   matExpansionPanelElement: MatExpansionPanel;
-  isFolderBeingCreated = true;
+  isFolderBeingCreated = false;
   @ViewChild("folderInput", {static: false}) folderNameInput: ElementRef;
 
   constructor(private bookshelfService: AppBookshelfService,
@@ -26,15 +26,12 @@ export class FolderListItemComponent implements OnInit {
 
   ngOnInit(): void {
     this.files = this.bookshelfService.filesAndFolders;
-    this.files.forEach(file => {
-      if(file.parentId === this.folder.id && file.isFolder === 1) {
-        this.relevantFolders.push(file);
-        console.log(this.relevantFolders)
-      }
-    })
+    this.relevantFolders = this.bookshelfService.getRelevantItems(this.folder.id);
+    console.log(this.relevantFolders)
   }
 
   startCreatingFolder() {
+    this.matExpansionPanelElement.close();
     this.isFolderBeingCreated = !this.isFolderBeingCreated;
   }
 
@@ -51,6 +48,8 @@ export class FolderListItemComponent implements OnInit {
       isFolder: 1
     }
     this.bookshelfService.postFile(folder);
+    this.folderNameInput.nativeElement.value = "";
+    this.isFolderBeingCreated = false;
   }
 
   addFile(parentId: number) {

@@ -32,7 +32,7 @@
     <ng-container *ngFor="let folderItem of files">
       <app-folder-list-item
       class="folder"
-      *ngIf="folderItem.isFolder == 1 && folderItem.isDeleted == 0"
+      *ngIf="folderItem.isFolder == 1 && folderItem.isDeleted == 0 && folderItem.parentId === 0"
       [folder]="folderItem"
     ></app-folder-list-item> 
     </ng-container>
