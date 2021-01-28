@@ -14,6 +14,7 @@ export class FolderListPreviewComponent implements OnInit {
   item: ItemFile;
   private fileId: string;
   itemSub: Subscription;
+  files: any;
 
   constructor(
     public route: ActivatedRoute,
@@ -24,7 +25,11 @@ export class FolderListPreviewComponent implements OnInit {
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       if (paramMap.has('fileId')) {
         this.fileId = paramMap.get('fileId');
-        //this.item = this.bookshelfService.getFile(this.fileId);
+        this.bookshelfService.getFile(+this.fileId).subscribe(
+          (data: ItemFile) => {
+            this.item = data;
+          }
+        )
       }
     });
   }

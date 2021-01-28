@@ -27,6 +27,6 @@ export class FileListComponent implements OnInit {
 
   onClick(event, id: string) {
     event.stopPropagation();
-    this.router.navigate(['/edit', id]);
+    this.router.navigate(['/edit', id], );
   }
 }

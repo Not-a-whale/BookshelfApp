@@ -14,6 +14,7 @@ export class FolderListEditComponent implements OnInit {
   mode: string;
   postId: string;
   post: ItemFile;
+  parentId: number;
 
   @HostBinding('style.width') public width: string = '45%';
   constructor(
@@ -35,28 +36,36 @@ export class FolderListEditComponent implements OnInit {
       if (paramMap.has('fileId')) {
         this.mode = 'edit';
         this.postId = paramMap.get('fileId');
-        // this.post = this.bookshelfService.getFile(this.postId);
-        this.form.setValue({
-          name: this.post.name,
-          description: this.post.description,
-          imageLink: this.post.imageLink,
-        });
+        this.bookshelfService.getFile(+this.postId).subscribe((data: ItemFile) => {
+          this.post = data;
+
+          this.form.setValue({
+            name: this.post.name,
+            imageLink: this.post.imageLink,
+            description: this.post.description
+          })
+        })
+        console.log(this.post)
+
       } else {
         this.mode = 'create';
         this.postId = null;
-      }
+      } 
     });
   }
 
   onSaveFile() {
-    const newValue = {
+    console.log(this.form.get("name"))
+    const newValue: ItemFile = {
       name: this.form.get('name').value,
       description: this.form.get('description').value,
       imageLink: this.form.get('imageLink').value,
+      parentId: this.bookshelfService.getCurentParent(),
+      isFolder: 0,
+      isDeleted: 0
     };
-    this.post.name = newValue.name;
-    this.post.imageLink = newValue.imageLink;
-    this.post.description = newValue.description;
+    this.bookshelfService.postFile(newValue);
+    this.bookshelfService.getFiles();
     this.router.navigate(['']);
   }
 }

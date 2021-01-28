@@ -1,13 +1,14 @@
 <div class="container">
   <h2>Root</h2>
   <div class="container__buttons">
-    <button color="primary" mat-flat-button class="container__button">
+    <button color="primary" mat-flat-button class="container__button" (click)="createFile(0)">
       Add File
     </button>
     <button
       color="accent"
       mat-flat-button
       class="container__button container__button--yellow"
+      (click)="startCreatingFolder()"
     >
       Add Folder
     </button>
@@ -15,17 +16,34 @@
       Remove Selection
     </button>
   </div>
+  <div class="container__inputs" style="margin-left: 30px; display: flex; flex-direction: column;" *ngIf="isFolderBeingCreated">
+    <mat-form-field>
+      <input
+      matInput
+      type="text"
+      placeholder="Name of the folder"
+      #folderInput
+      (keyup.enter)="createFolder($event, 0)"
+      />
+    </mat-form-field>
+    <p>Hit "enter" key, when done</p>
+  </div>
   <div class="container__books">
-    <!--     <app-folder-list-item
+    <ng-container *ngFor="let folderItem of files">
+      <app-folder-list-item
       class="folder"
-      *ngFor="let folderInput of folders"
-      [folder]="folderInput"
-    ></app-folder-list-item> -->
+      *ngIf="folderItem.isFolder == 1 && folderItem.isDeleted == 0"
+      [folder]="folderItem"
+    ></app-folder-list-item>
+    </ng-container>
   </div>
   <div class="container__files">
+    <ng-container
+    *ngFor="let file of files">
     <app-file-list-item
-      *ngFor="let file of files"
+      *ngIf="file.isFolder === 0 && file.isDeleted === 0"
       [file]="file"
     ></app-file-list-item>
+    </ng-container>
   </div>
 </div>

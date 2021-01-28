@@ -4,10 +4,13 @@ import { ItemFile } from './models/Item';
 
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { Subject, Observable } from 'rxjs';
+import { Subject, Observable, BehaviorSubject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AppBookshelfService {
+  filesAndFolders = [];
+  filesSubj = new Subject();
+  curentParent = 10;
   /*   private bookshelf: any = [
     {
       id: '1',
@@ -102,8 +105,37 @@ export class AppBookshelfService {
  */
 
   getFiles() {
-    return this.http.get<Observable<any>>('http://localhost:3000/api/items');
+     this.http.get<any>('http://localhost:3000/api/items').subscribe(
+       data => {
+         data.items.forEach(item => {
+           this.filesAndFolders.push(item);
+         });
+         this.filesSubj.next(this.filesAndFolders.slice());
+       }
+     )
   }
+
+  getFile(id: number): Observable<ItemFile> {
+    console.log(id)
+    return this.http.get<ItemFile>("http://localhost:3000/api/items/" + id);
+  }
+
+  emitIdForFile(parentId: number) {
+    this.curentParent = parentId;
+    console.log(this.curentParent)
+  }
+
+  getCurentParent() {
+    return this.curentParent;
+  }
+
+  postFile(item: ItemFile) {
+    return this.http.post<ItemFile>("http://localhost:3000/api/items/", item).subscribe(response => {
+      console.log("response")
+    })
+  }
+
+
 
   /*  getFiles(): Array<ItemFile> {
     //return this.bookshelf.slice().filter((item) => item.description);

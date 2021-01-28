@@ -9,7 +9,7 @@
             alt="folder"
             style="margin-right: 10px"
           />
-          <!--    //       {{ folder.name }} -->
+               {{ folder.name }} 
           <mat-checkbox
             color="primary"
             style="margin-left: 10px"
@@ -36,26 +36,20 @@
         </div>
       </div>
     </mat-expansion-panel-header>
-    <!--     <app-folder-list-item
-      *ngFor="let includedFolder of folder.includedFolders"
-      [folder]="includedFolder"
-    ></app-folder-list-item> -->
+    <ng-container *ngFor="let folderItem of files">
+      <app-folder-list-item
+      *ngif="folder.id === folderItem.parentId && folder.isDeleted === 0"
+      [folder]="folder"
+    ></app-folder-list-item>
+    </ng-container>
     <mat-action-row>
       <ng-container *ngIf="!MatExpansionPanel.closed.closed">
-        <!--         <mat-card *ngFor="let file of folder.includedFiles" class="file">
-          <div class="dashes"></div>
-          <img [src]="file.imageLink" [alt]="file.name" class="file__image" />
-          <mat-checkbox color="primary"></mat-checkbox>
-          <div class="file__content">
-            <mat-card-title>{{ file.name }}</mat-card-title>
-            <mat-card-content>{{ file.description }}</mat-card-content>
-          </div>
-          <button color="warn" mat-button class="file__button">Edit</button>
-        </mat-card> -->
-        <!--         <app-file-list-item
-          *ngFor="let file of folder.includedFiles"
+        <ng-container *ngFor="let file of files">
+          <app-file-list-item
+          *ngIf="file.parentId === folder.id && file.isDeleted === 0"
           [file]="file"
-        ></app-file-list-item> -->
+        ></app-file-list-item>
+        </ng-container>
       </ng-container>
     </mat-action-row>
   </mat-expansion-panel>
