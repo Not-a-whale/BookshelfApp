@@ -21,11 +21,11 @@ export class FileListComponent implements OnInit {
     this.matExpansionPanelElement.close();
   }
 
-  redirectToPreview(id: string) {
+  redirectToPreview(id: number) {
     this.router.navigate([id]);
   }
 
-  onClick(event, id: string) {
+  onClick(event, id: number) {
     event.stopPropagation();
     this.router.navigate(['/edit', id], );
   }

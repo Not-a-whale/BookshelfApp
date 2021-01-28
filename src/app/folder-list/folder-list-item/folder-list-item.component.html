@@ -23,11 +23,12 @@
             color="primary"
             mat-stroked-button
             class="folder__button"
-            (click)="notClosePanel()"
+            (click)="addFile(folder.id)"
           >
             Add File
           </button>
-          <button color="accent" mat-stroked-button class="folder__button">
+          <button color="accent" mat-stroked-button class="folder__button"
+          (click)="startCreatingFolder()">
             Add Folder
           </button>
           <button color="warn" mat-stroked-button class="folder__button">
@@ -36,9 +37,21 @@
         </div>
       </div>
     </mat-expansion-panel-header>
-    <ng-container *ngFor="let folderItem of files">
-      <app-folder-list-item
-      *ngif="folder.id === folderItem.parentId && folder.isDeleted === 0"
+    <div class="container__inputs" style="margin-left: 30px; display: flex; flex-direction: column;" *ngIf="isFolderBeingCreated">
+      <mat-form-field>
+        <input
+        matInput
+        type="text"
+        placeholder="Name of the folder"
+        #folderInput
+        (keyup.enter)="addFolder($event, folder.id)"
+        />
+      </mat-form-field>
+      <p>Hit "enter" key, when done</p>
+    </div>
+    <ng-container *ngFor="let folderItem of relevantFolders">
+    <app-folder-list-item
+      *ngIf="folder.id === folderItem.parentId && folder.isDeleted === 0"
       [folder]="folder"
     ></app-folder-list-item>
     </ng-container>
