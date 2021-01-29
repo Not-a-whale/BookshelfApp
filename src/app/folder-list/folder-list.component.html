@@ -44,7 +44,7 @@
     <ng-container
     *ngFor="let file of files">
     <app-file-list-item
-      *ngIf="file.isFolder === 0 && file.isDeleted === 0"
+      *ngIf="file.isFolder === 0 && file.isDeleted === 0 && file.parentId === 0"
       [file]="file"
       [form]="checkboxForm"
     ></app-file-list-item>
