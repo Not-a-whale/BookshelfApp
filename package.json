@@ -1,5 +1,5 @@
 {
-  "name": "bookshelf-app",
+  "name": "bookshelf-app-nikita",
   "version": "0.0.0",
   "scripts": {
     "start:server": "nodemon server.js",

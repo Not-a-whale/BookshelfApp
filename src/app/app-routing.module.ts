@@ -5,8 +5,6 @@ import { FolderListEditComponent } from './folder-list-edit/folder-list-edit.com
 
 const routes: Routes = [
   { path: '', component: FolderListPreviewComponent }, 
-  { path: '/', component: FolderListPreviewComponent }, 
-  { path: './', component: FolderListPreviewComponent }, 
   { path: "create", component: FolderListEditComponent }, 
   { path: ':fileId', component: FolderListPreviewComponent },
   { path: 'edit/:fileId', component: FolderListEditComponent },
