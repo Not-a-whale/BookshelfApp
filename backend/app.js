@@ -11,9 +11,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, '..', 'dist', 'BookshelfApp')));
 
-app.get("/", function(req, resp){
- resp.sendFile(path.join(__dirname, '..', 'dist', 'BookshelfApp', 'index.html'));
-})
+//app.get("/", function(req, resp){
+// resp.sendFile(path.join(__dirname, '..', 'dist', 'BookshelfApp', 'index.html'));
+//})
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
