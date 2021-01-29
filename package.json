@@ -9,7 +9,7 @@
     "e2e": "ng e2e",
     "start": "ng serve",
     "start:server": "nodemon server.js",
-    "preinstall": "npm install -g angular/cli",
+    "preinstall": "npm install -g @angular/cli",
     "postinstall": "ng build && mv dist/* ."
   },
   "private": true,
