@@ -2,7 +2,8 @@
   "name": "bookshelf-app",
   "version": "0.0.0",
   "scripts": {
-    "start:server": "nodemon server.js"
+    "start:server": "nodemon server.js",
+    "start": "ng serve"
   },
   "private": true,
   "dependencies": {
