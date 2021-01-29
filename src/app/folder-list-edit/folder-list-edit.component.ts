@@ -54,22 +54,24 @@ export class FolderListEditComponent implements OnInit {
   }
 
   onSaveFile() {
-    const newValue: ItemFile = {
-      id: +this.postId,
-      name: this.form.get('name').value,
-      description: this.form.get('description').value,
-      imageLink: this.form.get('imageLink').value,
-      parentId: this.bookshelfService.getCurentParent(),
-      isFolder: 0,
-      isDeleted: 0
-    };
-    if(this.mode === "create") {
-      this.bookshelfService.postFile(newValue);
-      this.bookshelfService.getFiles();
-    } else {
-      this.bookshelfService.updateItem(newValue)
+    if(this.form.valid) {
+      const newValue: ItemFile = {
+        id: +this.postId,
+        name: this.form.get('name').value,
+        description: this.form.get('description').value,
+        imageLink: this.form.get('imageLink').value,
+        parentId: this.bookshelfService.getCurentParent(),
+        isFolder: 0,
+        isDeleted: 0
+      };
+      if(this.mode === "create") {
+        this.bookshelfService.postFile(newValue);
+        this.bookshelfService.getFiles();
+      } else {
+        this.bookshelfService.updateItem(newValue)
+      }
+      window.location.reload();
+      this.router.navigate(['']);
     }
-    window.location.reload();
-    this.router.navigate(['']);
-  }
+    }
 }

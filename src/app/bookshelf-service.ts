@@ -10,7 +10,7 @@ export class AppBookshelfService {
   filesAndFolders = [];
   filteredArrOfFolders = [];
   filesSubj = new Subject();
-  curentParent = 10;
+  curentParent = +localStorage.getItem("idOfLastParent");
  
   getFiles() {
      this.http.get<any>('http://localhost:3000/api/items').subscribe(
@@ -31,7 +31,8 @@ export class AppBookshelfService {
   }
 
   emitIdForFile(parentId: number) {
-    this.curentParent = parentId;
+    let idOfLastParent;
+    localStorage.setItem("idOfLastParent", parentId.toString()) 
   }
 
   getCurentParent() {
