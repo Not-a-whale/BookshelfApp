@@ -2,13 +2,13 @@
   "name": "bookshelf-app-nikita",
   "version": "0.0.0",
   "scripts": {
-    "start:server": "nodemon server.js",
     "ng": "ng",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "start": "ng serve"
+    "start": "ng serve",
+    "start:server": "nodemon server.js"
   },
   "private": true,
   "dependencies": {
