@@ -7,7 +7,9 @@ const itemsRoutes = require("./routes/items");
 
 const sequelize = require("./util/database");
 
-app.use(express.static(path.join(__dirname,'dist','BookshelfApp')));
+app.use("/", function(req, resp){
+  resp.send("hello");
+})
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -22,7 +24,7 @@ app.use((req, res, next) => {
     "Access-Control-Allow-Methods",
     "GET, POST, PATCH, DELETE, PUT, OPTIONS"
   );
-  console.log(__dirname);
+  console.log(path.join(__dirname,'dist','BookshelfApp'));
   next();
 });
 
