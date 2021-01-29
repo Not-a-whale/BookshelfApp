@@ -25,7 +25,7 @@ router.post("", (req, res, next) => {
   ).then().catch()
 });
 
-router.get('/', (req, res, next) => {
+router.get("", (req, res, next) => {
   Item.findAll()
     .then((items) => {
       res.status(200).json({
