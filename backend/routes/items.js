@@ -36,6 +36,16 @@ router.get("", (req, res, next) => {
     .catch();
 });
 
+router.get("*", (req, res, next) => {
+  Item.findAll()
+    .then((items) => {
+      res.status(200).json({
+        message: "Items fetched successfully",
+        items: items,
+      });
+    })
+    .catch();
+});
 
 router.get("/:id", (req, res, next) => {
   Item.findByPk(req.params.id).then((post) => {
