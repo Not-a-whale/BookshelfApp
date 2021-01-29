@@ -40,7 +40,6 @@ export class FolderListComponent implements OnInit {
   createFile(id: number) {
     this.bookshelfService.emitIdForFile(id);
     this.router.navigate(['create']);
-    window.location.reload();
   }
 
   createFolder(event, id) {
