@@ -3,14 +3,15 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "build": "ng build --prod",
+    "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "start": "ng serve",
+    "start": "npm server.js",
+    "serve": "ng serve --open",
     "start:server": "nodemon server.js",
     "preinstall": "npm install -g @angular/cli",
-    "postinstall": "ng build --prod"    
+    "postinstall": "ng build --aot --prod"    
   },
   "private": true,
   "dependencies": {
