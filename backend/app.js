@@ -7,12 +7,13 @@ const itemsRoutes = require("./routes/items");
 
 const sequelize = require("./util/database");
 
-app.use("/", function(req, resp){
-  resp.send("hello");
-})
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.static(__dirname + '/dist/BookshelfApp'));
+
+//app.get("/", function(req, resp){
+// resp.sendFile("hello");
+//})
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
