@@ -4,7 +4,7 @@ const router = express.Router();
 const Item = require("../models/item");
 
 router.post("", (req, res, next) => {
-  const url = req.protocol + "://" + req.get("host");
+  //const url = req.protocol + "://" + req.get("host");
   const post = new Item({
     name: req.body.name,
     description: req.body.description,
@@ -25,7 +25,7 @@ router.post("", (req, res, next) => {
   ).then().catch()
 });
 
-router.get("", (req, res, next) => {
+router.get('/', (req, res, next) => {
   Item.findAll()
     .then((items) => {
       res.status(200).json({
@@ -36,16 +36,6 @@ router.get("", (req, res, next) => {
     .catch();
 });
 
-router.get("*", (req, res, next) => {
-  Item.findAll()
-    .then((items) => {
-      res.status(200).json({
-        message: "Items fetched successfully",
-        items: items,
-      });
-    })
-    .catch();
-});
 
 router.get("/:id", (req, res, next) => {
   Item.findByPk(req.params.id).then((post) => {
