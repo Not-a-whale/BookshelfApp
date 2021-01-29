@@ -3,17 +3,22 @@
     <div class="dash" *ngIf="!MatExpansionPanel.closed.closed"></div>
     <mat-expansion-panel-header>
       <div class="header__container">
-        <div style="display: flex; align-items: center">
+        <div style="display: flex; align-items: center" *ngIf="form">
           <img
             src="../../../assets/images/icons/048-folder.svg"
             alt="folder"
             style="margin-right: 10px"
           />
                {{ folder.name }} 
-          <mat-checkbox
+          <div [formGroup]="form">
+            <mat-checkbox
             color="primary"
             style="margin-left: 10px"
+            formControlName="{{folder.id.toString()}}"
+            (click)="stopFolding()"
           ></mat-checkbox>
+          </div>
+
         </div>
         <div
           class="folder__buttons"
@@ -24,20 +29,21 @@
             mat-stroked-button
             class="folder__button"
             (click)="addFile(folder.id)"
+            type="button"
           >
             Add File
           </button>
           <button color="accent" mat-stroked-button class="folder__button"
-          (click)="startCreatingFolder()">
+          (click)="startCreatingFolder()" type="button">
             Add Folder
           </button>
-          <button color="warn" mat-stroked-button class="folder__button">
+          <button color="warn" mat-stroked-button class="folder__button" (click)="startEditFolder(folder.id)" type="button">
             Edit
           </button>
         </div>
       </div>
     </mat-expansion-panel-header>
-    <div class="container__inputs" style="margin-left: 30px; display: flex; flex-direction: column;" *ngIf="isFolderBeingCreated">
+     <div class="container__inputs" style="margin-left: 30px; display: flex; flex-direction: column;" [ngClass]="isFolderBeingCreated ? 'visible' : 'hidden'">
       <mat-form-field>
         <input
         matInput
@@ -48,18 +54,21 @@
         />
       </mat-form-field>
       <p>Hit "enter" key, when done</p>
-    </div>
+    </div> 
     <ng-container *ngFor="let folderItem of relevantFolders">
      <app-folder-list-item
       [folder]="folderItem"
+      [form]="form"
+      *ngIf="folderItem.isDeleted === 0"
     ></app-folder-list-item>  
     </ng-container>
     <mat-action-row>
       <ng-container *ngIf="!MatExpansionPanel.closed.closed">
         <ng-container *ngFor="let file of files">
-          <app-file-list-item
-          *ngIf="file.parentId === folder.id && file.parentId !== 0 && file.isDeleted === 0"
+       <app-file-list-item
+          *ngIf="file.parentId === folder.id && file.parentId !== 0 && file.isDeleted === 0 && file.isFolder === 0"
           [file]="file"
+          [form]="form"
         ></app-file-list-item>
         </ng-container>
       </ng-container>

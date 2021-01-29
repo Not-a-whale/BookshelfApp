@@ -2,6 +2,7 @@ import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { MatExpansionPanel } from '@angular/material/expansion';
 import { ItemFile } from '../../../models/Item';
 import { Router } from '@angular/router';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-file-list-item',
@@ -12,6 +13,7 @@ export class FileListComponent implements OnInit {
   @Input() file: ItemFile;
   @ViewChild('MatExpansionPanel', { static: true })
   matExpansionPanelElement: MatExpansionPanel;
+  @Input() public form: FormGroup;
 
   constructor(private router: Router) {}
 

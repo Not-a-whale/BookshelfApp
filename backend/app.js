@@ -4,17 +4,9 @@ const bodyParser = require("body-parser");
 const app = express();
 
 const itemsRoutes = require("./routes/items");
-//const userRoutes = require("./routes/user");
 
 const sequelize = require("./util/database");
 
-/* db.execute("SELECT * FROM data")
-  .then((result) => {
-    console.log(result);
-  })
-  .catch((err) => {
-    console.log(err);
-  }); */
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -37,10 +29,8 @@ sequelize
   .then((result) => {
   })
   .catch((err) => {
-    console.log(err);
   });
 
 app.use("/api/items", itemsRoutes);
-//app.use("/api/user", postsRoutes);
 
 module.exports = app;

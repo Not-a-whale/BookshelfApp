@@ -3,6 +3,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ItemFile } from '../models/Item';
 import { AppBookshelfService } from '../bookshelf-service';
 import { Router } from '@angular/router';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-folder-list',
@@ -14,6 +15,7 @@ export class FolderListComponent implements OnInit {
   files: any;
   isFolderBeingCreated = false;
   @ViewChild("folderInput", {static: false}) folderNameInput: ElementRef;
+  checkboxForm: FormGroup;
 
   constructor(private bookshelfService: AppBookshelfService, private router: Router) {}
 
@@ -21,7 +23,11 @@ export class FolderListComponent implements OnInit {
     this.bookshelfService.getFiles();
     this.bookshelfService.filesSubj.subscribe(data => {
       this.files = data;
-      console.log(data)
+      let groupOfCheckboxes = {};
+      this.files.forEach(element => {
+        groupOfCheckboxes[element.id.toString()] = new FormControl("");
+      });
+      this.checkboxForm = new FormGroup(groupOfCheckboxes);
     });
 
     // this.getFolders();
@@ -34,6 +40,7 @@ export class FolderListComponent implements OnInit {
   createFile(id: number) {
     this.bookshelfService.emitIdForFile(id);
     this.router.navigate(['create']);
+    window.location.reload();
   }
 
   createFolder(event, id) {
@@ -47,20 +54,17 @@ export class FolderListComponent implements OnInit {
     }
     this.bookshelfService.postFile(folder);
     this.isFolderBeingCreated = false;
+    window.location.reload();
   }
 
-/*   getFiles() {
-    this.bookshelfService.getFiles().subscribe((file: any) => {
-      
-      file.items.forEach((item) => {
-        this.files.push(item);
-      });
-      console.log(this.files);
-    });
-    console.log(this.files);
+  onSubmit() {
+    let arr = Object.values(this.checkboxForm.value);
+    let indexArr = [];
+    arr.forEach((item, index) => {
+      if(item) {
+        indexArr.push(index + 1);
+      }
+    })
+    this.bookshelfService.deleteItems(indexArr);
   }
- */
-  /*   getFolders() {
-    this.folders = this.bookshelfService.getFolders();
-  } */
 }

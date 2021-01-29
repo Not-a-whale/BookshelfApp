@@ -45,7 +45,6 @@ export class FolderListEditComponent implements OnInit {
             description: this.post.description
           })
         })
-        console.log(this.post)
 
       } else {
         this.mode = 'create';
@@ -55,8 +54,8 @@ export class FolderListEditComponent implements OnInit {
   }
 
   onSaveFile() {
-    console.log(this.form.get("name"))
     const newValue: ItemFile = {
+      id: +this.postId,
       name: this.form.get('name').value,
       description: this.form.get('description').value,
       imageLink: this.form.get('imageLink').value,
@@ -64,8 +63,13 @@ export class FolderListEditComponent implements OnInit {
       isFolder: 0,
       isDeleted: 0
     };
-    this.bookshelfService.postFile(newValue);
-    this.bookshelfService.getFiles();
+    if(this.mode === "create") {
+      this.bookshelfService.postFile(newValue);
+      this.bookshelfService.getFiles();
+    } else {
+      this.bookshelfService.updateItem(newValue)
+    }
+    window.location.reload();
     this.router.navigate(['']);
   }
 }

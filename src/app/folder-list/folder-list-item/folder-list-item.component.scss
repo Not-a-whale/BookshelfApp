@@ -113,3 +113,15 @@ mat-action-row {
   padding: 16px 8px 16px 0px;
   flex-direction: column;
 }
+
+.visible {
+  visibility: visible;
+  transform: scaleY(1);
+  display: flex;
+}
+
+.hidden {
+  visibility: hidden;
+  transform: scaleY(0);
+  display: none !important;
+}

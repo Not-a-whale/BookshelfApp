@@ -13,7 +13,6 @@ router.post("", (req, res, next) => {
     parentId: req.body.parentId,
     isFolder: req.body.isFolder
   });
-  console.log(post)
   Item.create(
     {
       name: post.name,
@@ -23,7 +22,7 @@ router.post("", (req, res, next) => {
       parentId: post.parentId,
       isFolder: post.isFolder
     }
-  ).then(data => console.log(data)).catch(data => console.log(data))
+  ).then().catch()
 });
 
 router.get("", (req, res, next) => {
@@ -34,32 +33,10 @@ router.get("", (req, res, next) => {
         items: items,
       });
     })
-    .catch((err) => console.log(err));
+    .catch();
 });
 
-router.delete("/:id", (req, res, next) => {
-  Post.deleteOne({ _id: req.params.id }).then((result) => {
-    res.status(200).json({ message: "Post deleted" });
-  });
-});
 
-/* router.put("/:id", (req, res, next) => {
-  let imagePath = req.body.imagePath;
-  if (req.title) {
-    const url = req.protocol + "://" + req.get("host");
-    imagePath = url + "/images/" + req.file.filename;
-  }
-  const post = new Post({
-    _id: req.body.id,
-    title: req.body.title,
-    content: req.body.content,
-    imagePath: req.body.imagePath,
-  });
-  Post.updateOne({ _id: req.params.id }, post).then((result) => {
-    res.status(200).json({ message: "Update successful" });
-  });
-});
- */
 router.get("/:id", (req, res, next) => {
   Item.findByPk(req.params.id).then((post) => {
     if (post) {
@@ -69,5 +46,23 @@ router.get("/:id", (req, res, next) => {
     }
   });
 });
+
+router.post("/edit", (req, res, next) => {
+  
+  const id = req.body.id;
+  const updatedName = req.body.name;
+  const updatedIsDeleted = req.body.isDeleted;
+  const updatedDescription = req.body.description;
+  const updatedImageLink = req.body.imageLink;
+  Item.findByPk(id).then(item => {
+    item.name = updatedName;
+    item.description = updatedDescription;
+    item.isDeleted = updatedIsDeleted;
+    item.imageLink = updatedImageLink;
+    return item.save();
+  }).then(result => {
+  
+  }).catch();
+})
 
 module.exports = router;

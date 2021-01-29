@@ -1,8 +1,10 @@
-<a class="file__link" (click)="redirectToPreview(file.id)">
+<a class="file__link" (click)="redirectToPreview(file.id)" >
   <mat-card class="file">
     <div class="dashes"></div>
     <img [src]="file.imageLink" [alt]="file.name" class="file__image" />
-    <mat-checkbox color="primary"></mat-checkbox>
+    <div [formGroup]="form">
+      <mat-checkbox color="primary" formControlName="{{file.id.toString()}}"></mat-checkbox>
+    </div>
     <div class="file__content">
       <mat-card-title>{{ file.name }}</mat-card-title>
       <mat-card-content>{{ file.description }}</mat-card-content>
