@@ -15,7 +15,9 @@ export class AppBookshelfService {
   getFiles() {
      this.http.get<any>('./api/items').subscribe(
        (data: any) => {
-        this.filesAndFolders = data.items;
+         console.log(data);
+        this.filesAndFolders = data.items;         
+        console.log(this.filesAndFolders);
          data.items.forEach(item => {
            if(item.parentId !== 0 && item.isFolder === 1) {
             this.filteredArrOfFolders.push(item);
