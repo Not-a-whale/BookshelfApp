@@ -7,16 +7,16 @@ import { Subject, Observable, BehaviorSubject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AppBookshelfService {
-  filesAndFolders = [];
+  filesAndFolders: ItemFile[];
   filteredArrOfFolders = [];
   filesSubj = new Subject();
   curentParent = +localStorage.getItem("idOfLastParent");
  
   getFiles() {
      this.http.get<any>('./api/items').subscribe(
-       data => {
+       (data: any) => {
+        this.filesAndFolders = data.items;
          data.items.forEach(item => {
-           this.filesAndFolders = item;
            if(item.parentId !== 0 && item.isFolder === 1) {
             this.filteredArrOfFolders.push(item);
            }
