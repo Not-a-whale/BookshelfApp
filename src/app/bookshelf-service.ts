@@ -16,6 +16,7 @@ export class AppBookshelfService {
      this.http.get<any>('./api/items').subscribe(
        (data: any) => {
          console.log(data);
+         console.log(this.filesAndFolders);
         this.filesAndFolders = data.items;         
         console.log(this.filesAndFolders);
          data.items.forEach(item => {
@@ -42,7 +43,7 @@ export class AppBookshelfService {
   }
 
   postFile(item: ItemFile) {
-    return this.http.post<ItemFile>("./api/items/create", item).subscribe(response => {
+    return this.http.post<ItemFile>("./api/items/", item).subscribe(response => {
 
     })
   }
