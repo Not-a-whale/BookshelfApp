@@ -13,7 +13,7 @@ export class AppBookshelfService {
   curentParent = +localStorage.getItem("idOfLastParent");
  
   getFiles() {
-     this.http.get<any>('http://localhost:3000/api/items').subscribe(
+     this.http.get<any>('https://bookshelf-app-nikita.herokuapp.com:3000/api/items').subscribe(
        data => {
          data.items.forEach(item => {
            this.filesAndFolders.push(item);
@@ -27,7 +27,7 @@ export class AppBookshelfService {
   }
 
   getFile(id: number): Observable<ItemFile> {
-    return this.http.get<ItemFile>("http://localhost:3000/api/items/" + id);
+    return this.http.get<ItemFile>("https://bookshelf-app-nikita.herokuapp.com:3000/api/items/" + id);
   }
 
   emitIdForFile(parentId: number) {
@@ -40,7 +40,7 @@ export class AppBookshelfService {
   }
 
   postFile(item: ItemFile) {
-    return this.http.post<ItemFile>("http://localhost:3000/api/items/", item).subscribe(response => {
+    return this.http.post<ItemFile>("https://bookshelf-app-nikita.herokuapp.com:3000/api/items/", item).subscribe(response => {
 
     })
   }
@@ -52,7 +52,7 @@ export class AppBookshelfService {
   }
 
   updateItem(item: ItemFile) {
-    return this.http.post<ItemFile>("http://localhost:3000/api/items/edit", item).subscribe(data => {
+    return this.http.post<ItemFile>("https://bookshelf-app-nikita.herokuapp.com:3000/api/items/edit", item).subscribe(data => {
     })
   }
 

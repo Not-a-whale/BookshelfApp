@@ -67,6 +67,7 @@ export class FolderListEditComponent implements OnInit {
       if(this.mode === "create") {
         this.bookshelfService.postFile(newValue);
         this.bookshelfService.getFiles();
+        console.log(this.bookshelfService.curentParent);
       } else {
         this.bookshelfService.updateItem(newValue)
       }

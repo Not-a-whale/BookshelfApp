@@ -1,8 +1,8 @@
 const Sequelize = require("sequelize");
 
-const sequelize = new Sequelize("bookshelf", "root", "root", {
+const sequelize = new Sequelize("heroku_d2ece091677540c", "bec7006fa7d9b9", "4c6309ef", {
   dialect: "mysql",
-  host: "localhost",
+  host: "eu-cdbr-west-03.cleardb.net"
 });
 
 module.exports = sequelize;
