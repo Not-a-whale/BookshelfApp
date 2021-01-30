@@ -23,6 +23,7 @@ export class FolderListComponent implements OnInit {
     this.bookshelfService.getFiles();
     this.bookshelfService.filesSubj.subscribe(data => {
       this.files = data;
+      console.log(data)
       let groupOfCheckboxes = {};
       this.files.forEach(element => {
         groupOfCheckboxes[element.id.toString()] = new FormControl("");
@@ -53,17 +54,26 @@ export class FolderListComponent implements OnInit {
     }
     this.bookshelfService.postFile(folder);
     this.isFolderBeingCreated = false;
-    window.location.reload();
   }
 
   onSubmit() {
+    //  Gets an array of values from all the checkboxes
     let arr = Object.values(this.checkboxForm.value);
+    // An array for their indexes (the ones that are true/checked)
     let indexArr = [];
+    // An array for the actual elements
+    let idsArr = [];
+    // 1) Fill the indexArr with all the idexes in an array of checkboxes that were checked
     arr.forEach((item, index) => {
-      if(item) {
-        indexArr.push(index + 1);
+      if(item === true) {
+        indexArr.push(index);
       }
     })
-    this.bookshelfService.deleteItems(indexArr);
+    // 2) Getting the ids for all the checked inputs
+    indexArr.forEach((item, index) => {
+      idsArr.push(this.bookshelfService.filesAndFolders[item].id);
+    })
+    // 3) Feeding the array with all the items to the deleting function
+   this.bookshelfService.deleteItems(idsArr);
   }
 }

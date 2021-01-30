@@ -66,7 +66,6 @@ export class FolderListItemComponent implements OnInit {
     }
     this.folderNameInput.nativeElement.value = "";
     this.isFolderBeingCreated = false;
-    window.location.reload();
   }
 
   startEditFolder(id: number) {

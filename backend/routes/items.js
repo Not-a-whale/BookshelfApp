@@ -22,7 +22,10 @@ router.post("", (req, res, next) => {
       parentId: post.parentId,
       isFolder: post.isFolder
     }
-  ).then().catch()
+  ).then(res.status(200).json({
+    message: "Items fetched successfully",
+    result: true,
+  })).catch()
 });
 
 router.get("", (req, res, next) => {
@@ -60,9 +63,11 @@ router.post("/edit", (req, res, next) => {
     item.isDeleted = updatedIsDeleted;
     item.imageLink = updatedImageLink;
     return item.save();
-  }).then(result => {
-  
-  }).catch();
+  }).then(
+    res.status(200).json({
+      result: true
+    })
+    ).catch();
 })
 
 module.exports = router;
