@@ -71,7 +71,7 @@ export class FolderListEditComponent implements OnInit {
       } else {
         this.bookshelfService.updateItem(newValue)
       }
-      window.location.reload();
+      this.bookshelfService.getFiles();
       this.router.navigate(['']);
     }
     }
