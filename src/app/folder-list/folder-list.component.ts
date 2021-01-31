@@ -24,8 +24,8 @@ export class FolderListComponent implements OnInit, OnDestroy {
 
 
     this.sub = this.bookshelfService.getItemsUpdateListener().subscribe(data => {
+      this.files = this.bookshelfService.getCopyOfItems()
       this.files = data;
-      console.log(this.files)
       let groupOfCheckboxes = {};
       this.files.forEach(element => {
         groupOfCheckboxes[element.id.toString()] = new FormControl("");
@@ -34,6 +34,7 @@ export class FolderListComponent implements OnInit, OnDestroy {
     });
 
     this.bookshelfService.getFiles();
+    this.files = this.bookshelfService.getCopyOfItems();
 
     // this.getFolders();
 
@@ -70,7 +71,6 @@ export class FolderListComponent implements OnInit, OnDestroy {
   onSubmit() {
     //  Gets an array of values from all the checkboxes
     let arr = Object.values(this.checkboxForm.value);
-    console.log(this.checkboxForm.value)
     // An array for their indexes (the ones that are true/checked)
     let indexArr = [];
     // An array for the actual elements

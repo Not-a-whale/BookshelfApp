@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef, OnChanges } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 //import { ItemFolder } from '../../models/ItemFolder';
 import { MatExpansionPanel } from '@angular/material/expansion';
@@ -12,7 +12,7 @@ import { ItemFile } from 'src/app/models/Item';
   templateUrl: './folder-list-item.component.html',
   styleUrls: ['./folder-list-item.component.scss'],
 })
-export class FolderListItemComponent implements OnInit {
+export class FolderListItemComponent implements OnInit, OnChanges {
   @Input() folder: ItemFile;
   @Input() public form: FormGroup;
   @ViewChild('MatExpansionPanel', { static: true }) matExpansionPanelElement: MatExpansionPanel;
@@ -29,7 +29,12 @@ export class FolderListItemComponent implements OnInit {
 
   ngOnInit(): void {
     this.bookshelfService.getItemsUpdateListener().subscribe(items => this.files = items);
+    this.files = this.bookshelfService.getCopyOfItems();
     this.relevantFolders = this.bookshelfService.getRelevantItems(this.folder.id);
+  }
+
+  ngOnChanges(): void {
+    this.files = this.bookshelfService.getCopyOfItems();
   }
 
   startCreatingFolder() {
@@ -52,6 +57,8 @@ export class FolderListItemComponent implements OnInit {
     if(this.mode === "create") {
       this.bookshelfService.filesAndFolders.push(folder);
       this.bookshelfService.postFile(folder);
+      this.bookshelfService.getFiles();
+      this.files = this.bookshelfService.getCopyOfItems();
       // Because somehow my posts are not getting updated
       window.location.reload();
     } 
