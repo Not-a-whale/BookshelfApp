@@ -1,27 +1,29 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 //import { ItemFolder } from '../models/ItemFolder';
 import { ItemFile } from '../models/Item';
 import { AppBookshelfService } from '../bookshelf-service';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-folder-list',
   templateUrl: './folder-list.component.html',
   styleUrls: ['./folder-list.component.scss'],
 })
-export class FolderListComponent implements OnInit {
+export class FolderListComponent implements OnInit, OnDestroy {
   //folders: ItemFolder[];
   files: any;
   isFolderBeingCreated = false;
   @ViewChild("folderInput", {static: false}) folderNameInput: ElementRef;
   checkboxForm: FormGroup;
+  sub: Subscription
 
   constructor(private bookshelfService: AppBookshelfService, private router: Router) {}
 
   ngOnInit(): void {
     this.bookshelfService.getFiles();
-    this.bookshelfService.filesSubj.subscribe(data => {
+    this.sub = this.bookshelfService.filesSubj.subscribe(data => {
       this.files = data;
       console.log(data)
       let groupOfCheckboxes = {};
@@ -34,6 +36,10 @@ export class FolderListComponent implements OnInit {
 
     // this.getFolders();
 
+  }
+
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
   }
 
   startCreatingFolder() {

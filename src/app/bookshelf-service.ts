@@ -3,7 +3,7 @@ import { ItemFile } from './models/Item';
 
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { Subject, Observable, BehaviorSubject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AppBookshelfService {
@@ -13,8 +13,8 @@ export class AppBookshelfService {
   curentParent = 0;
  
   getFiles() {
-     this.http.get<any>('http://localhost:3000/api/items').subscribe(
-       (data: any) => {
+     this.http.get<{items: ItemFile[], message: string}>('./api/items').subscribe(
+       (data: {items: ItemFile[], message: string}) => {
          console.log(data);
          console.log(this.filesAndFolders);
          this.filesAndFolders = data.items;
@@ -31,7 +31,7 @@ export class AppBookshelfService {
   }
 
   getFile(id: number): Observable<ItemFile> {
-    return this.http.get<ItemFile>("http://localhost:3000/api/items/" + id);
+    return this.http.get<ItemFile>("./api/items/" + id);
   }
 
   emitIdForFile(parentId: number) {
@@ -44,7 +44,7 @@ export class AppBookshelfService {
 
   postFile(item: ItemFile) {
     console.log(item)
-    return this.http.post<ItemFile>("http://localhost:3000/api/items/", item).subscribe(result => {
+    return this.http.post<ItemFile>("./api/items/", item).subscribe(result => {
     })
   }
 
@@ -55,7 +55,7 @@ export class AppBookshelfService {
   }
 
   updateItem(item: ItemFile) {
-    return this.http.post<ItemFile>("http://localhost:3000/api/items/edit", item).subscribe((data: any) => {
+    return this.http.post<ItemFile>("./api/items/edit", item).subscribe((data: any) => {
       console.log(data)
       if(data.result) {
         console.log(data)
