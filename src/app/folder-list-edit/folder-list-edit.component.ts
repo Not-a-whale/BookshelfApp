@@ -1,4 +1,4 @@
-import { Component, OnInit, HostBinding } from '@angular/core';
+import { Component, OnInit, HostBinding, NgZone } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { AppBookshelfService } from '../bookshelf-service';
@@ -12,7 +12,7 @@ import { ItemFile } from '../models/Item';
 export class FolderListEditComponent implements OnInit {
   form: FormGroup;
   mode: string;
-  postId: string;
+  postId: number;
   post: ItemFile;
   parentId: number;
 
@@ -20,7 +20,8 @@ export class FolderListEditComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private bookshelfService: AppBookshelfService,
-    private router: Router
+    private router: Router,
+    private zone: NgZone
   ) {}
 
   ngOnInit(): void {
@@ -35,7 +36,7 @@ export class FolderListEditComponent implements OnInit {
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       if (paramMap.has('fileId')) {
         this.mode = 'edit';
-        this.postId = paramMap.get('fileId');
+        this.postId = +paramMap.get('fileId');
         this.bookshelfService.getFile(+this.postId).subscribe((data: ItemFile) => {
           this.post = data;
 
@@ -51,6 +52,7 @@ export class FolderListEditComponent implements OnInit {
         this.postId = null;
       } 
     });
+
   }
 
   onSaveFile() {
@@ -65,8 +67,19 @@ export class FolderListEditComponent implements OnInit {
         isDeleted: 0
       };
       if(this.mode === "create") {
+        //this.bookshelfService.filesAndFolders.push(newValue);
+        console.log(this.form)
         this.bookshelfService.postFile(newValue);
+        this.zone.run(() => 
+        {
+          this.bookshelfService.getFiles();
+        })
       } else {
+        let updatedPost = this.bookshelfService.filesAndFolders.find(elem => elem.id === newValue.id);
+        updatedPost.name = newValue.name;
+        console.log(this.mode)
+        updatedPost.description = newValue.description;
+        updatedPost.imageLink = newValue.imageLink;
         this.bookshelfService.updateItem(newValue);
       }
       this.router.navigate(['']);

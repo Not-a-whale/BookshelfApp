@@ -29,9 +29,11 @@ export class FolderListComponent implements OnInit {
         groupOfCheckboxes[element.id.toString()] = new FormControl("");
       });
       this.checkboxForm = new FormGroup(groupOfCheckboxes);
+      console.log(this.checkboxForm)
     });
 
     // this.getFolders();
+
   }
 
   startCreatingFolder() {

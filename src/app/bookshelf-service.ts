@@ -44,10 +44,7 @@ export class AppBookshelfService {
 
   postFile(item: ItemFile) {
     console.log(item)
-    return this.http.post<ItemFile>("http://localhost:3000/api/items/", item).subscribe((response: any) => {
-      if(response.result) {
-        this.getFiles();
-      }
+    return this.http.post<ItemFile>("http://localhost:3000/api/items/", item).subscribe(result => {
     })
   }
 

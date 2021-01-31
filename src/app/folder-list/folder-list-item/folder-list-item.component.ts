@@ -14,14 +14,14 @@ import { ItemFile } from 'src/app/models/Item';
 })
 export class FolderListItemComponent implements OnInit {
   @Input() folder: ItemFile;
+  @Input() public form: FormGroup;
+  @ViewChild('MatExpansionPanel', { static: true }) matExpansionPanelElement: MatExpansionPanel;
+  @ViewChild("folderInput", {static: false}) folderNameInput: ElementRef;
   files: any;
   relevantFolders = [];
   mode: string;
-  @ViewChild('MatExpansionPanel', { static: true })
-  matExpansionPanelElement: MatExpansionPanel;
   isFolderBeingCreated = false;
-  @ViewChild("folderInput", {static: false}) folderNameInput: ElementRef;
-  @Input() public form: FormGroup;
+  
 
   constructor(private bookshelfService: AppBookshelfService,
     private router: Router
@@ -63,6 +63,8 @@ export class FolderListItemComponent implements OnInit {
         isFolder: 1
       }
       this.bookshelfService.updateItem(editedFolder);
+      // updating name on the front-end
+      this.bookshelfService.filesAndFolders.find(item => item.id === editedFolder.id).name = editedFolder.name;
     }
     this.folderNameInput.nativeElement.value = "";
     this.isFolderBeingCreated = false;
