@@ -10,7 +10,6 @@ import { AppBookshelfService } from '../bookshelf-service';
   styleUrls: ['./folder-list-preview.component.scss'],
 })
 export class FolderListPreviewComponent implements OnInit {
-  @HostBinding('style.width') public width: string = '45%';
   item: ItemFile;
   private fileId: string;
   itemSub: Subscription;

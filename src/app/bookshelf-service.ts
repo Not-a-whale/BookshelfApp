@@ -3,30 +3,26 @@ import { ItemFile } from './models/Item';
 
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { Subject, Observable } from 'rxjs';
+import { Subject, Observable, BehaviorSubject, AsyncSubject, ReplaySubject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AppBookshelfService {
   filesAndFolders: ItemFile[] = [];
   filteredArrOfFolders = [];
-  filesSubj = new Subject();
+  filesSubj = new BehaviorSubject(this.filesAndFolders);
   curentParent = 0;
  
   getFiles() {
-     this.http.get<{items: ItemFile[], message: string}>('./api/items').subscribe(
-       (data: {items: ItemFile[], message: string}) => {
-         console.log(data);
-         console.log(this.filesAndFolders);
+     this.http.get<any>('./api/items').subscribe(
+       (data: any) => {
          this.filesAndFolders = data.items;
-        this.filesAndFolders = data.items.filter(item => item.isDeleted === 0);         
-        console.log(this.filesAndFolders);
+        this.filesAndFolders = data.items.filter(item => item.isDeleted === 0);  
+        this.filesSubj.next(data.items.filter(item => item.isDeleted === 0)); 
          data.items.forEach(item => {
            if(item.parentId !== 0 && item.isFolder === 1) {
             this.filteredArrOfFolders.push(item);
            }
-         });
-     console.log(this.filesAndFolders)
-     this.filesSubj.next(data.items.filter(item => item.isDeleted === 0));      }
+         });     }
      )
   }
 
@@ -43,9 +39,11 @@ export class AppBookshelfService {
   }
 
   postFile(item: ItemFile) {
-    console.log(item)
-    return this.http.post<ItemFile>("./api/items/", item).subscribe(result => {
-    })
+    return this.http.post<ItemFile>("./api/items/", item).subscribe(result => {})
+  }
+
+  getItemsUpdateListener() {
+    return this.filesSubj.asObservable();
   }
 
   getRelevantItems(id: number): any {
@@ -56,9 +54,7 @@ export class AppBookshelfService {
 
   updateItem(item: ItemFile) {
     return this.http.post<ItemFile>("./api/items/edit", item).subscribe((data: any) => {
-      console.log(data)
       if(data.result) {
-        console.log(data)
       } 
     })
   }

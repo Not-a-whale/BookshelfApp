@@ -1,9 +1,14 @@
 .container {
-  margin: 10% auto;
-  height: 80vh;
+  margin: 5% auto;
+  height: 50vh;
+  min-width: 50vw;
   display: flex;
   align-items: center;
   justify-content: center;
+
+  @media screen and (max-width: 767px) {
+    height: 40vh;
+  }
 
   form {
     display: flex;
@@ -12,7 +17,11 @@
 
   mat-card {
     width: 70%;
-    margin-right: 5%;
+    margin-left: 5%;
+
+    @media screen and (max-width: 767px) {
+      margin-right: 0;
+    }
   }
 
   .buttons {

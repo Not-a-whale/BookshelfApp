@@ -12,7 +12,6 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./folder-list.component.scss'],
 })
 export class FolderListComponent implements OnInit, OnDestroy {
-  //folders: ItemFolder[];
   files: any;
   isFolderBeingCreated = false;
   @ViewChild("folderInput", {static: false}) folderNameInput: ElementRef;
@@ -22,17 +21,19 @@ export class FolderListComponent implements OnInit, OnDestroy {
   constructor(private bookshelfService: AppBookshelfService, private router: Router) {}
 
   ngOnInit(): void {
-    this.bookshelfService.getFiles();
-    this.sub = this.bookshelfService.filesSubj.subscribe(data => {
+
+
+    this.sub = this.bookshelfService.getItemsUpdateListener().subscribe(data => {
       this.files = data;
-      console.log(data)
+      console.log(this.files)
       let groupOfCheckboxes = {};
       this.files.forEach(element => {
         groupOfCheckboxes[element.id.toString()] = new FormControl("");
       });
       this.checkboxForm = new FormGroup(groupOfCheckboxes);
-      console.log(this.checkboxForm)
     });
+
+    this.bookshelfService.getFiles();
 
     // this.getFolders();
 
@@ -60,6 +61,8 @@ export class FolderListComponent implements OnInit, OnDestroy {
       parentId: id,
       isFolder: 1
     }
+    this.bookshelfService.filesAndFolders.push(folder);
+    this.bookshelfService.getFiles();
     this.bookshelfService.postFile(folder);
     this.isFolderBeingCreated = false;
   }
@@ -67,6 +70,7 @@ export class FolderListComponent implements OnInit, OnDestroy {
   onSubmit() {
     //  Gets an array of values from all the checkboxes
     let arr = Object.values(this.checkboxForm.value);
+    console.log(this.checkboxForm.value)
     // An array for their indexes (the ones that are true/checked)
     let indexArr = [];
     // An array for the actual elements

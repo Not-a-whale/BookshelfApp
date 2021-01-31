@@ -16,7 +16,6 @@ export class FolderListEditComponent implements OnInit {
   post: ItemFile;
   parentId: number;
 
-  @HostBinding('style.width') public width: string = '45%';
   constructor(
     private route: ActivatedRoute,
     private bookshelfService: AppBookshelfService,
@@ -56,6 +55,7 @@ export class FolderListEditComponent implements OnInit {
   }
 
   onSaveFile() {
+    event.preventDefault()
     if(this.form.valid) {
       const newValue: ItemFile = {
         id: +this.postId,
@@ -67,8 +67,6 @@ export class FolderListEditComponent implements OnInit {
         isDeleted: 0
       };
       if(this.mode === "create") {
-        //this.bookshelfService.filesAndFolders.push(newValue);
-        console.log(this.form)
         this.bookshelfService.postFile(newValue);
         this.zone.run(() => 
         {
@@ -77,7 +75,6 @@ export class FolderListEditComponent implements OnInit {
       } else {
         let updatedPost = this.bookshelfService.filesAndFolders.find(elem => elem.id === newValue.id);
         updatedPost.name = newValue.name;
-        console.log(this.mode)
         updatedPost.description = newValue.description;
         updatedPost.imageLink = newValue.imageLink;
         this.bookshelfService.updateItem(newValue);

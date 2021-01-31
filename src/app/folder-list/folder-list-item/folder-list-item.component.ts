@@ -28,7 +28,7 @@ export class FolderListItemComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.files = this.bookshelfService.filesAndFolders;
+    this.bookshelfService.getItemsUpdateListener().subscribe(items => this.files = items);
     this.relevantFolders = this.bookshelfService.getRelevantItems(this.folder.id);
   }
 
@@ -50,7 +50,10 @@ export class FolderListItemComponent implements OnInit {
       isFolder: 1
     }
     if(this.mode === "create") {
+      this.bookshelfService.filesAndFolders.push(folder);
       this.bookshelfService.postFile(folder);
+      // Because somehow my posts are not getting updated
+      window.location.reload();
     } 
     if(this.mode === "edit") {
       const editedFolder = {

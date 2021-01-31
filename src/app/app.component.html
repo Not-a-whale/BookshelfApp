@@ -1,4 +1,13 @@
+<div class="header" style="background-color: #e74b32; width: 100%; display: flex; align-items: center; justify-content: center; height: 120px; overflow: hidden; margin-bottom: 50px;">
+  <img src="../assets/images/Bookshelf.jfif" alt="image for bookshelf" style="margin: 0 auto;">
+</div>
 <div class="container">
-  <app-folder-list></app-folder-list>
-  <router-outlet></router-outlet>
+  <div class="left">
+    <h2 style="text-align: center;">File Structure</h2>
+    <app-folder-list></app-folder-list>
+  </div>
+  <div class="right">
+    <h2 style="text-align: center;">File Content</h2>
+    <router-outlet></router-outlet>
+  </div>
 </div>
