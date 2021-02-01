@@ -9,20 +9,21 @@ import { Subject, Observable, BehaviorSubject, AsyncSubject, ReplaySubject } fro
 export class AppBookshelfService {
   filesAndFolders: ItemFile[] = [];
   filteredArrOfFolders = [];
-  filesSubj = new BehaviorSubject(this.filesAndFolders);
+  filesSubj = new Subject();
   curentParent = 0;
  
   getFiles() {
     this.http.get<any>('./api/items').subscribe(
        (data: any) => {
-         this.filesAndFolders = data.items;
         this.filesAndFolders = data.items.filter(item => item.isDeleted === 0);  
-        this.filesSubj.next(data.items.filter(item => item.isDeleted === 0)); 
+        console.log(data.items.filter(item => item.isDeleted === 0))
          data.items.forEach(item => {
            if(item.parentId !== 0 && item.isFolder === 1) {
             this.filteredArrOfFolders.push(item);
            }
-         });     }
+         });
+         this.filesSubj.next(this.getCopyOfItems())     
+        }
      )
   }
 
@@ -43,7 +44,11 @@ export class AppBookshelfService {
   }
 
   postFile(item: ItemFile) {
-    return this.http.post<ItemFile>("./api/items/", item).subscribe(() => this.filesSubj.next(this.filesAndFolders))
+    return this.http.post<ItemFile>("./api/items/", item).subscribe(
+    () => {
+      this.getFiles();
+      this.filesSubj.next(this.filesAndFolders)
+    })
   }
 
   getItemsUpdateListener() {

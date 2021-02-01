@@ -67,8 +67,9 @@ export class FolderListEditComponent implements OnInit {
         isDeleted: 0
       };
       if(this.mode === "create") {
-        this.bookshelfService.filesAndFolders.push(newValue)
+        //this.bookshelfService.filesAndFolders.push(newValue)
         this.bookshelfService.postFile(newValue);
+        console.log(this.bookshelfService.filesAndFolders) 
       } else {
         let updatedPost = this.bookshelfService.filesAndFolders.find(elem => elem.id === newValue.id);
         updatedPost.name = newValue.name;

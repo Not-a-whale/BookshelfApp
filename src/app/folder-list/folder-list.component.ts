@@ -12,7 +12,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./folder-list.component.scss'],
 })
 export class FolderListComponent implements OnInit, OnDestroy {
-  files: any;
+  files: any = [];
   isFolderBeingCreated = false;
   @ViewChild("folderInput", {static: false}) folderNameInput: ElementRef;
   checkboxForm: FormGroup;
@@ -22,9 +22,8 @@ export class FolderListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
-
+    //this.bookshelfService.getFiles();
     this.sub = this.bookshelfService.getItemsUpdateListener().subscribe(data => {
-      this.files = this.bookshelfService.getCopyOfItems()
       this.files = data;
       let groupOfCheckboxes = {};
       this.files.forEach(element => {
@@ -33,11 +32,9 @@ export class FolderListComponent implements OnInit, OnDestroy {
       this.checkboxForm = new FormGroup(groupOfCheckboxes);
     });
 
-    this.bookshelfService.getFiles();
-    this.files = this.bookshelfService.getCopyOfItems();
-
-    // this.getFolders();
-
+    if(this.files.length === 0) {
+      this.bookshelfService.getFiles();
+    }
   }
 
   ngOnDestroy(): void {
