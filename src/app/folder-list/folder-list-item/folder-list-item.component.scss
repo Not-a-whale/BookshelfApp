@@ -89,6 +89,11 @@ mat-expansion-panel {
     margin: 0;
   }
 
+  
+  mat-expansion-panel-body {
+    overflow: hidden;
+  }
+
   &__image {
     width: 40px;
     height: 40px;

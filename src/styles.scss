@@ -7,6 +7,11 @@
   font-family: 'B612', sans-serif !important;
 }
 
+
+mat-expansion-panel-body {
+  overflow: hidden;
+}
+
 a {
   text-decoration: none;
 }

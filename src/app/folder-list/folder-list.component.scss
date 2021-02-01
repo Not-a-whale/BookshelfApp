@@ -11,6 +11,10 @@
     margin-top: 20px !important;
   }
 
+  mat-expansion-panel-body {
+    overflow: hidden;
+  }
+
   &__buttons {
     margin-bottom: 10px;
 

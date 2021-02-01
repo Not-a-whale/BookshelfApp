@@ -73,6 +73,11 @@ mat-expansion-panel {
     }
   }
 
+  
+  mat-expansion-panel-body {
+    overflow: hidden;
+  }
+
   mat-checkbox {
     margin-right: 9px;
   }
