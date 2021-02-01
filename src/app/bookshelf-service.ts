@@ -13,7 +13,7 @@ export class AppBookshelfService {
   curentParent = 0;
  
   getFiles() {
-    this.http.get<any>('./api/items').subscribe(
+    this.http.get<any>('http://localhost:3000/api/items').subscribe(
        (data: any) => {
          this.filesAndFolders = data.items;
         this.filesAndFolders = data.items.filter(item => item.isDeleted === 0);  
@@ -27,7 +27,7 @@ export class AppBookshelfService {
   }
 
   getFile(id: number): Observable<ItemFile> {
-    return this.http.get<ItemFile>("./api/items/" + id);
+    return this.http.get<ItemFile>("http://localhost:3000/api/items/" + id);
   }
 
   getCopyOfItems(): ItemFile[] {
@@ -43,7 +43,7 @@ export class AppBookshelfService {
   }
 
   postFile(item: ItemFile) {
-    return this.http.post<ItemFile>("./api/items/", item).subscribe(() => this.filesSubj.next(this.filesAndFolders))
+    return this.http.post<ItemFile>("http://localhost:3000/api/items/", item).subscribe(() => this.filesSubj.next(this.filesAndFolders))
   }
 
   getItemsUpdateListener() {
@@ -57,7 +57,7 @@ export class AppBookshelfService {
   }
 
   updateItem(item: ItemFile) {
-    return this.http.post<ItemFile>("./api/items/edit", item).subscribe((data: any) => {
+    return this.http.post<ItemFile>("http://localhost:3000/api/items/edit", item).subscribe((data: any) => {
       if(data.result) {
       } 
     })
