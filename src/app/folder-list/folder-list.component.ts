@@ -63,7 +63,6 @@ export class FolderListComponent implements OnInit, OnDestroy {
       isFolder: 1
     }
     this.bookshelfService.filesAndFolders.push(folder);
-    this.bookshelfService.getFiles();
     this.bookshelfService.postFile(folder);
     this.isFolderBeingCreated = false;
   }

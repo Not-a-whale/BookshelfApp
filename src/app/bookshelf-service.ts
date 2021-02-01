@@ -13,7 +13,7 @@ export class AppBookshelfService {
   curentParent = 0;
  
   getFiles() {
-     this.http.get<any>('./api/items').subscribe(
+    this.http.get<any>('./api/items').subscribe(
        (data: any) => {
          this.filesAndFolders = data.items;
         this.filesAndFolders = data.items.filter(item => item.isDeleted === 0);  
@@ -43,7 +43,7 @@ export class AppBookshelfService {
   }
 
   postFile(item: ItemFile) {
-    return this.http.post<ItemFile>("./api/items/", item).subscribe(result => {})
+    return this.http.post<ItemFile>("./api/items/", item).subscribe(() => this.filesSubj.next(this.filesAndFolders))
   }
 
   getItemsUpdateListener() {

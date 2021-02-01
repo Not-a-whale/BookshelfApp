@@ -57,8 +57,6 @@ export class FolderListItemComponent implements OnInit, OnChanges {
     if(this.mode === "create") {
       this.bookshelfService.filesAndFolders.push(folder);
       this.bookshelfService.postFile(folder);
-      this.bookshelfService.getFiles();
-      this.files = this.bookshelfService.getCopyOfItems();
       // Because somehow my posts are not getting updated
       window.location.reload();
     } 
